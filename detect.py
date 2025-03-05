@@ -1,22 +1,30 @@
-import torch
+# detect.py
 import cv2
+from ultralytics import YOLO
 
-# Load YOLOv5 model
-model = torch.hub.load('ultralytics/yolov8', 'yolov8s', pretrained=True)
+# Load YOLOv8 model
+model = YOLO('yolov8n.pt')  # Make sure to have yolov8n.pt in the same folder or specify the path
 
-def detect_objects(video_path):
-    cap = cv2.VideoCapture(video_path)
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
+# Initialize webcam (0 is usually the default camera)
+cap = cv2.VideoCapture(1)
 
-        results = model(frame)
-        annotated_frame = results.render()[0]
-        cv2.imshow('YOLOv8 Object Detection', annotated_frame)
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        break
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+    # Run YOLOv8 inference
+    results = model(frame)
 
-    cap.release()
-    cv2.destroyAllWindows()
+    # Draw bounding boxes
+    annotated_frame = results[0].plot()  # Plot detection boxes on the frame
+
+    # Display in a window (for testing)
+    cv2.imshow('YOLOv8 Webcam Detection', annotated_frame)
+
+    # Exit with 'q'
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
