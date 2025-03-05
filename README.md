@@ -1,1 +1,1 @@
-# crowd-sensing-yolov11
+# crowd-sensing-yolov8
