@@ -3,12 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YOLOv8 Webcam Detection</title>
+    <title>YOLOv8 Crowd Sensing</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="{{ url_for('static', filename='sketch.js') }}" defer></script>
 </head>
 <body>
-    <div class="video-container">
-        <img src="{{ url_for('video_feed') }}" width="720" height="480">
+    <div class="content-wrapper">
+        <div class="camera-select">
+            <select id="cameraSelect" class="camera-dropdown">
+                {% for camera in cameras %}
+                <option value="{{ camera.id }}">{{ camera.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="video-container">
+            <img src="{{ url_for('video_feed') }}?bev=0" id="videoFeed">
+            <div id="p5-container"></div>
+        </div>
+        
+        <div class="control-panel">
+            <button class="eye-toggle" id="bevToggle">
+                <i class="fa-solid fa-eye"></i>
+                <i class="fa-solid fa-eye-slash" style="display: none;"></i>
+            </button>
+        </div>
     </div>
+
+    <script>
+        document.getElementById('cameraSelect').addEventListener('change', function() {
+            const cameraId = this.value;
+            fetch(`/switch_camera/${cameraId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) {
+                        alert('Failed to switch camera');
+                    }
+                });
+        });
+
+    const toggle = document.getElementById('bevToggle');
+    const eye = toggle.querySelector('.fa-eye');
+    const eyeSlash = toggle.querySelector('.fa-eye-slash');
+    const videoFeed = document.getElementById('videoFeed');
+    
+    // Initially show closed eye since we start with webcam feed
+    eye.style.display = 'none';
+    eyeSlash.style.display = 'block';
+    
+    toggle.addEventListener('click', function() {
+        const isActive = toggle.classList.toggle('active');
+        eye.style.display = isActive ? 'block' : 'none';
+        eyeSlash.style.display = isActive ? 'none' : 'block';
+        videoFeed.src = "{{ url_for('video_feed') }}?bev=" + (isActive ? "1" : "0");
+    });
+
+    // Add detection update code
+    setInterval(() => {
+        fetch('/detections')
+            .then(response => response.json())
+            .then(data => {
+                updateDetections(data);
+            })
+            .catch(error => console.error('Error fetching detections:', error));
+    }, 100);  // Update every 100ms
+    </script>
 </body>
 </html>
