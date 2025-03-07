@@ -21,26 +21,61 @@ We displayed our visualization on the floor, using a projector we hung from the 
 - npm
 
 ### Installation
-1. Clone the repository:
+1. Enter the folder you want to clone the github repository into.
+ 
+2. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/crowd-sensing-yolov11.git
-    cd crowd-sensing-yolov11
+    git clone https://github.com/maxicozy/crowd-sensing-yolov11.git
+    cd /maxicozy/crowd-sensing-yolov11/
     ```
+2. Set up a virtual environment:
 
-2. Install Python dependencies:
+    - **On Windows:**
+        1. Install `virtualenv`:
+            ```bash
+            pip install virtualenv
+            ```
+        2. Create a virtual environment:
+            ```bash
+            python -m venv venv
+            ```
+        3. Activate the virtual environment:
+            - **Command Prompt:**
+                ```bash
+                venv\Scripts\activate
+                ```
+            - **PowerShell:**
+                ```bash
+                .\venv\Scripts\Activate.ps1
+                ```
+        4. Exit virtual environment:
+            ```
+            deactivate
+            ```
+
+    - **On Mac (or Linux):**
+        1. Install `virtualenv`:
+            ```bash
+            pip install virtualenv
+            ```
+        2. Create a virtual environment:
+            ```bash
+            python3 -m venv venv
+            ```
+        3. Activate the virtual environment:
+            ```bash
+            source venv/bin/activate
+            ```
+        4. Exit virtual environment:
+            ```
+            deactivate
+            ```
+
+3. Install Python dependencies:
     ```bash
     pip install -r requirements.txt
-    ```
 
-3. Install Node.js dependencies:
-    ```bash
-    npm install
-    ```
 
-4. Set up the YOLOv11 model:
-    ```bash
-    # Download the YOLOv11 model and place it in the appropriate directory
-    ```
 
 ## Usage
 1. Start the backend server:
