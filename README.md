@@ -5,9 +5,8 @@
 1. [Introduction](#introduction)
 2. [Setup](#setup)
 3. [Usage](#usage)
-4. [Testing](#testing)
-5. [Context](#context)
-6. [Contributing](#contributing)
+4. [Context](#context)
+5. [Contributing](#contributing)
 
 ## Introduction
 For this project, our goal was to track the movement or flow of a crowd around a room and then introduce a stimulus to interact with that behaviour. Using [YOLOv11](https://docs.ultralytics.com/de/models/yolo11/), we created bounding boxes around people in a camera feed, then created a visualization for the detections using [p5js](https://p5js.org/).
@@ -19,8 +18,6 @@ We displayed our visualization on the floor, using a projector we hung from the 
 ## Setup
 ### Prerequisites
 - Python 3.8+
-- Node.js
-- npm
 
 ### Installation
 1. Enter the folder you want to clone the github repository into.
@@ -88,4 +85,24 @@ We displayed our visualization on the floor, using a projector we hung from the 
 3. Scroll to reveal the control panel to select camera input and toggle vebcam feed and python visualization.
 
 
+## Context
+This project was developed as part of a micro-challenge in at Master in Design for Emergent Futures Master at IAAC. The task was to develop a project using digital fabrication and coding to create and artifact that we can later make use of in our projects.
 
+## Contributing
+We welcome contributions! Please follow these steps to contribute:
+
+1.  Fork the repository.
+2.  Create a new branch 
+    ```
+    git checkout -b feature-branch
+    ```
+3.  Make your changes.
+4.  Commit your changes 
+    ```
+    git commit -m 'Add new feature'
+    ```
+5.  Push to the branch
+    ```
+    git push origin feature-branch
+    ```
+6. Open a pull request.
