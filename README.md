@@ -14,6 +14,8 @@ For this project, our goal was to track the movement or flow of a crowd around a
 
 We displayed our visualization on the floor, using a projector we hung from the ceiling. A detailed documentation of the whole project and the custom projector mount can be found on our [hackster documentation](https://www.hackster.io/531606/crowd-sensing-710fba).
 
+![title-image](images/title-image.png)
+
 ## Setup
 ### Prerequisites
 - Python 3.8+
@@ -76,23 +78,14 @@ We displayed our visualization on the floor, using a projector we hung from the 
     pip install -r requirements.txt
 
 
-
 ## Usage
 1. Start the backend server:
     ```bash
     python app.py
     ```
+2. Open your browser and navigate to `http://localhost:3300`.
 
-2. Start the frontend development server:
-    ```bash
-    npm start
-    ```
+3. Scroll to reveal the control panel to select camera input and toggle vebcam feed and python visualization.
 
-3. Open your browser and navigate to `http://localhost:3000`.
 
-## Testing
-### Running Unit Tests
-To run the unit tests, use the following command:
-```bash
-npm test
 
