@@ -11,19 +11,19 @@
 </head>
 <body>
     <div class="content-wrapper">
-        <div class="camera-select">
+        <div class="video-container">
+            <img src="{{ url_for('video_feed') }}?bev=0" id="videoFeed">
+            <div id="p5-container" style="display: none;">
+                <!-- p5js canvas will be created here -->
+            </div>
+        </div>
+        
+        <div class="control-panel">
             <select id="cameraSelect" class="camera-dropdown">
                 {% for camera in cameras %}
                 <option value="{{ camera.id }}">{{ camera.name }}</option>
                 {% endfor %}
             </select>
-        </div>
-        <div class="video-container">
-            <img src="{{ url_for('video_feed') }}?bev=0" id="videoFeed">
-            <div id="p5-container"></div>
-        </div>
-        
-        <div class="control-panel">
             <button class="eye-toggle" id="bevToggle">
                 <i class="fa-solid fa-eye"></i>
                 <i class="fa-solid fa-eye-slash" style="display: none;"></i>
@@ -37,7 +37,13 @@
             fetch(`/switch_camera/${cameraId}`)
                 .then(response => response.json())
                 .then(data => {
-                    if (!data.success) {
+                    if (data.success) {
+                        // Refresh the video feed by updating its src
+                        const videoFeed = document.getElementById('videoFeed');
+                        const currentSrc = videoFeed.src;
+                        const bevParam = currentSrc.includes('bev=1') ? '1' : '0';
+                        videoFeed.src = `{{ url_for('video_feed') }}?bev=${bevParam}&t=${Date.now()}`;
+                    } else {
                         alert('Failed to switch camera');
                     }
                 });
@@ -57,6 +63,8 @@
         eye.style.display = isActive ? 'block' : 'none';
         eyeSlash.style.display = isActive ? 'none' : 'block';
         videoFeed.src = "{{ url_for('video_feed') }}?bev=" + (isActive ? "1" : "0");
+        const p5Container = document.getElementById('p5-container');
+        p5Container.style.display = isActive ? 'block' : 'none';
     });
 
     // Add detection update code
