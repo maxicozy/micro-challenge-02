@@ -16,7 +16,7 @@ latest_results = None
 
 # Load YOLO model
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-model = YOLO('yolov8n.pt')
+model = YOLO('yolo11n.pt')
 model.to(device)
 yolo_classes = model.names
 
@@ -34,8 +34,8 @@ if not cap.isOpened():
 
 # Simplified tracking vars
 position_history = {}
-HISTORY_LENGTH = 60  # Reduced from 155
-SMOOTHING_FACTOR = 0.6  # Less aggressive smoothing
+HISTORY_LENGTH = 120  # Reduced from 155
+SMOOTHING_FACTOR = 0.9  # Less aggressive smoothing
 
 def smooth_position(track_id, new_pos):
     """Simple position smoothing"""
@@ -58,7 +58,7 @@ def process_detections(results):
             cls = int(box.cls[0])
             conf = float(box.conf[0])
             
-            if cls == 0 and conf >= 0.3:
+            if cls == 0 and conf >= 0.4:
                 x1, y1, x2, y2 = map(int, box.xyxy[0])
                 track_id = int(box.id[0]) if box.id is not None else 0
                 

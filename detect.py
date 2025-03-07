@@ -10,7 +10,7 @@ from camselect import init_camera
 # Load the YOLO model
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 # model = YOLO('yolov5n.pt')  # load an official model
-model = YOLO('yolov8n.pt')  # load an official model
+model = YOLO('yolo11n.pt')  # load an official model
 model.to(device)
 yolo_classes = model.names
 
